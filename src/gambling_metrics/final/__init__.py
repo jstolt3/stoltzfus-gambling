@@ -1,5 +1,5 @@
 """Functions for formatting results."""
 
-from gambling_metrics.final.plot import plot_regression_by_age
+from gambling_metrics.final.plot import plot_gambling_over_time
 
-__all__ = [plot_regression_by_age]
+__all__ = [plot_gambling_over_time]

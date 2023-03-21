@@ -2,22 +2,31 @@
 data_name: data.csv
 
 columns_to_drop:
-  - nationality
-  - ethnicity
-  - region
-  - amt_weekends
-  - amt_weekdays
-  - type
-  - gross_income
+  - voids
+  - cashed
+  - taxable_rev
+  - taxable_retail_rev
+  - priv_tax
+  - admin_share
+  - state_share
+  - vlt_played
+  - vlt_won
+  - tptsnba
+  - tptsncaa
+  - gamesncaa
+  - tptsnfl
+  - tydsnfl
+  - tgoalsnhl
+  - gamesnhl
+  - gamesmlb
+  - trunsmlb
+  - week
 
 categorical_columns:
-  - gender
-  - marital_status
-  - highest_qualification
-  - smoke
+  - type
 
 column_rename_mapping:
-  highest_qualification: qualification
+  type: casino
 
-outcome: smoke
-outcome_numerical: smoke_numerical  # created during the clean_data step
+outcome: vlt_revenue
+# outcome_numerical: smoke_numerical  # created during the clean_data step

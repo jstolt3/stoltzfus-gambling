@@ -1,138 +1,181 @@
-\documentclass[11pt, a4paper, leqno]{article}
-\usepackage{a4wide}
-\usepackage[T1]{fontenc}
+\documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage{float, afterpage, rotating, graphicx}
-\usepackage{epstopdf}
-\usepackage{longtable, booktabs, tabularx}
-\usepackage{fancyvrb, moreverb, relsize}
-\usepackage{eurosym, calc}
-% \usepackage{chngcntr}
-\usepackage{amsmath, amssymb, amsfonts, amsthm, bm}
-\usepackage{caption}
-\usepackage{mdwlist}
-\usepackage{xfrac}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[sorting=none]{biblatex}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{longtable}
 \usepackage{setspace}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{subcaption}
-\usepackage{minibox}
-% \usepackage{pdf14} % Enable for Manuscriptcentral -- can't handle pdf 1.5
-% \usepackage{endfloat} % Enable to move tables / figures to the end. Useful for some
-% submissions.
-
-\usepackage[
-    natbib=true,
-    bibencoding=inputenc,
-    bibstyle=authoryear-ibid,
-    citestyle=authoryear-comp,
-    maxcitenames=3,
-    maxbibnames=10,
-    useprefix=false,
-    sortcites=true,
-    backend=biber
-]{biblatex}
-\AtBeginDocument{\toggletrue{blx@useprefix}}
-\AtBeginBibliography{\togglefalse{blx@useprefix}}
-\setlength{\bibitemsep}{1.5ex}
-\addbibresource{../../paper/refs.bib}
-
-\usepackage[unicode=true]{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    anchorcolor=black,
-    citecolor=NavyBlue,
-    filecolor=black,
-    menucolor=black,
-    runcolor=black,
-    urlcolor=NavyBlue
-}
+\addbibresource{refs.bib}
+\setlength{\columnsep}{40pt}
+\setlength{\voffset}{0.7cm}
+\setlength{\headsep}{40pt}
+\geometry{legalpaper, portrait, margin=3cm}
+\onehalfspacing
 
 
-\widowpenalty=10000
-\clubpenalty=10000
 
-\setlength{\parskip}{1ex}
-\setlength{\parindent}{0ex}
-\setstretch{1.5}
+% Title page
+\title{Identification and the Sunk Cost Fallacy in Empirical Research: An Application with Difference-in-Difference\\\Large{Econometrics Research Module}}
+\author{Jacob Stoltzfus \\ University of Bonn}
+\date{February 10, 2023}
 
-
+% Header and footer
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\textbf{Economics Research Module}}
+\fancyhead[R]{\textbf{Jacob Stoltzfus}\\ s6jastol@uni-bonn.de}
+\fancyfoot{}
 \begin{document}
 
-\title{Identification and the Sunk Cost Fallacy in Empirical Research: An Application with Difference-in-Difference\thanks{Jacob Stoltzfus, Universität Bonn. Email: \href{mailto:s6jastol@uni-bonn.de}{\nolinkurl{s6jastol [at] uni-bonn [dot] de}}.}}
-
-\author{Jacob Stoltzfus}
-
-\date{
-    {\bf Preliminary -- please do not quote}
-    \\[1ex]
-    \today
-}
-
+\setlength{\headheight}{22.50113pt}.
 \maketitle
-
-
-\begin{abstract}
-    Some abstract here.
-\end{abstract}
+\thispagestyle{fancy}
+\clearpage
+\tableofcontents
+\thispagestyle{fancy}
 
 \clearpage
+% Begin page numbers
+\fancyfoot[C]{\thepage}
+\pagenumbering{arabic}
+%\begin{multicols}{2}
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction} % For the contents page
+    With the mass volume of papers being published in the modern day, it is difficult to have an original research idea. In addition, when one does purport to have an original idea, several Google searches will quickly reveal the contrary. Bringing research ideas to fruition is no simple task. It takes a formidable time investment to identify the problem, select a model, perform data collection, cleaning, and wrangling, as well as deal with the myriad of other small hiccups that will likely occur along the way. As such, it is of utmost importance to spend ample time with ideas before they are implemented to avoid a common but devastating problem: the sunk cost fallacy.
+
+    One of the ways the sunk cost fallacy manifests itself in a research context is when ideas which, despite having little promise of being successful\footnote{To be clear, here I am referring to my own research project rather than the paper from the original author. Peer-review is needed before making any kind of judgement.}are pursued for an extended period of time. This paper illustrates this problem in research through an application of the difference-in-difference method using data from US sports gambling and based on the approach from Brad Humphreys (2021\cite{Humphreys2021}), albeit with a slightly different research design. First, I will give some background of the original paper and show how my approach and data differs. Then, I will show and interpret my results. Afterwards, I will show how the result of the analysis could have been trivialized by placing more attention on identification. Finally, I will conjecture about the possible reasons for my result differing from that of the paper.
 
 
-\section{Introduction} % (fold)
-\label{sec:introduction}
+\section*{Background}
+\addcontentsline{toc}{section}{Background}
 
-If you are using this template, please cite this item from the references:
-\citet{GaudeckerEconProjectTemplates}.
+	In 1992, US Congress passed a law called the Professional and Amateur Sports Protection Act (PASPA). This prohibited all forms of sports betting in most US states, claiming that it was unhealthy for the integrity of competitive play. However, in early 2018, this law was subsequently deemed unconstitutional by the US Supreme Court. The decision to legalize sports betting was then left to individual states. The question then remained: Is there an incentive for states to legalize sports betting?
 
-The data set for the example project is taken from
-\url{https://www.stem.org.uk/resources/elibrary/resource/28452/large-datasets-stats4schools}.
-It contains data on smoking habits in the UK, with 1691 observations and 12 variables.
-We consider only 4 of the 12 features for the prediction of the variable
-\texttt{smoking}: \texttt{marital\_status}, \texttt{highest\_qualification},
-\texttt{gender} and \texttt{age}. We model the dependence using a Logistic model. All
-numerical features are included linearly, while categorical features are expanded into
-dummy variables. Figures below illustrate the model predictions over the lifetime. You
-will find one figure and one estimation summary table for each installed programming
-language.
+	In his paper, Humphreys (2021)\cite{Humphreys2021} focuses on sports betting within the West Virginia gambling market. West Virginia, by virtue of a grandfather clause within PASPA, legalized sports betting in early 2018, ahead of the Supreme Court decision. However, the five licensed casinos in West Virginia (Hollywood, Mountaineer, Wheeling Island, Mardi Gras, Greenbrier) did not adopt the policy at the same time. Some offered sports betting directly after the decision, some not until several weeks after. In addition, there was a legal dispute in early 2019 between Delaware North, the operator of the Wheeling Island and Mardi Gras casinos, and Miomni Gaming, the operator of the sports books within the aforementioned casinos. This caused these two casinos to stop all sports betting operations until February of 2020, when it would then soon close again due to the novel coronavirus.
+
+	Humphreys exploits these sources of variation in an attempt to document a causal “displacement effect”\cite{Humphreys2021}. Also referred to as “cannibalization” in the gambling literature, this phenomenon occurs when the introduction of a new form of gambling draws consumers away from existing forms. Since different forms of gambling have different tax rates, this can have drastic effects on the overall state tax revenue and, logically, the incentive for individual states to legalize sports gambling. I will now state the specification used in the paper as well as the corresponding data characteristics.
 
 
+\section*{Author Design and Specification}
+\addcontentsline{toc}{section}{Author Specification}
 
-\begin{figure}[H]
+The specification for the effect of sports gambling volume on that of traditional gambling is as follows. Humphreys proposes an instrumental variable framework, claiming there exists unobserved factors which affect both sports gambling and traditional gambling volume. The setup of the analysis follows a standard 2SLS structure, with the first stage as follows:
 
-    \centering
-    \includegraphics[width=0.85\textwidth]{../python/figures/smoking_by_marital_status}
+\begin{equation}
+    H_iw = \rho_i + \beta_1G_jw + \beta_2C_w + \epsilon_iw
+\end{equation}
+where\\
+\\$\rho_i =$ casino fixed effects\\
+$H_iw =$ total volume of sports betting in casino i in week w\\
+$G_jw =$ total number of games played in sport j in week w\\
+$C_w =$ various controls pertaining to sports betting volume\\
+$e_iw =$ error term\\
 
-    \caption{\emph{Python:} Model predictions of the smoking probability over the
-        lifetime. Each colored line represents a case where marital status is fixed to one
-        of the values present in the data set.}
-    \label{fig:python-predictions}
+The $C_w$ term specifically contains information on when mobile betting was available, indicator variables for the first several weeks of operation, and an indicator variable for the period of legal dispute. The fitted term from the first stage is then used on the RHS of the reduced form equation to find the causal impact of sports betting volume on that of traditional gambling as follows:
 
+\begin{equation}
+    V_iw = \rho_i + \beta_1\hat{H}_iw + \beta_2week + \beta_3legal + \beta_4mobile + \epsilon_iw
+\end{equation}
+
+In this specification, $\hat{H}_iw$ is the fitted variable from the first stage and $V_iw$ represents traditional gambling volume (either video terminal lottery (VLT) gambling or table gambling). The paper finds a significant positive effect on both the legal dispute variable and the sports gambling fitted variable at the 5\% significance level for the VLT gambling regression. The negative coefficient on the fitted value denotes the additional dollars lost in traditional gambling revenue per \$1 spent in sports gambling. Of particular interest is the legal dispute term. Humphreys directly interprets the legal dispute indicator variable in a difference-in-differences framework, claiming that it measures the average treatment effect per week of the legal dispute on \textit{traditional} gambling. Directly from Humphreys (2021\cite{Humphreys2021}), "The parameter on the suspension variable can be interpreted as a difference-in-differences estimate of the causal effect of elimination of sports betting on VLT wagering."
+
+Before we further interpret these results and implications, I would like to first introduce my own specification, which focuses on the legal treatment effect as the variable of interest.
+
+\section*{Personal Design and Specification}
+\addcontentsline{toc}{section}{Personal Design and Specification}
+
+It is important to note several potentially critical aspects in which the data described in the paper differs from my own. The data is in balanced panel form with observations aggregated to the weekly level. The time span of the two data sets is different. In Humphreys (2021\cite{Humphreys2021}), the data runs from the first week in September in 2018 to March 7, 2020. However, the available data in this analysis only extends to May of 2019, missing close to a year of variation. As a consequence, the data does not contain a mobile betting period for some of the casinos. The mobile betting period plays an important role, as it indicates when consumers would have a feasible substitute when in-house sports betting is not available. I make the assumption, perhaps naively, that these differences in data will not affect the results of the treatment. That is, variation in the data should still be sufficient to consistently measure a treatment effect.
+
+Since I am interested in the DID term, I simplify the analysis by choosing to focus on the simple design with multiple periods with treatment (legal dispute) occurring in one period. As detailed by my colleagues in other groups, assumptions must be met for a DID analysis in order to properly interpret the results. In terms of conditional independence, there should be no indication before the treatment that would suggest a certain casino would be more likely to fall into a legal dispute. While Humphreys claims the legal dispute is "exogenous to other unobservable factors affecting this market" and that there was "little indication in the press that a dispute was brewing"\cite{Humphreys2021}, it may indeed be the case that the quality of the casino in question could be correlated with the probability of it falling victim to a legal dispute.
+
+\begin{figure}[t]
+\caption{VLT Gambling over Time}
+\includegraphics[width = 10cm]{../bld/python/figures/trimmed_week1_total_table.png}
+\centering
+\label{fig:vlt}
 \end{figure}
 
+\begin{figure}[t]
+\caption{Table Gambling over Time}
+\includegraphics[width = 10cm]{../bld/python/figures/trimmed_week1_vlt_revenue.png}
+\centering
+\label{fig:table}
+\end{figure}
+
+The critical assumption of DID in this setting is parallel trends between the casinos. Are these casinos following similar trends over time pre-treatment? From figures \ref{fig:vlt} and \ref{fig:table}, we see VLT and traditional gambling over time before and after the treatment period. The black vertical line represents the treatment period. It is immediately clear that the different casinos have seemingly noisy trends pre-treatment as well as post-treatment. While we have an argument for common pre-trends with all casinos residing in the same state and operating under the same regulations, it is unclear whether the assumption actually holds based on the data. I move forward to the specification with this in mind.
+The model setup takes the form of a two-way fixed effects regression as follows:
+
+\newpage
+\begin{equation}
+     V_iw = \rho_i + \lambda_t + \beta_1H_iw + \beta_3legal + \beta_4mobile + \epsilon_iw
+\end{equation}
+where\\
+\\$\rho_i =$ casino fixed effects\\
+$\lambda_t =$ week fixed effects\\
+$H_iw =$ total volume of sports betting in casino i in week w\\
+$legal =$ indicator variable for legal dispute\\
+$mobile =$ mobile betting period\\
+$\epsilon_iw =$ error term\\
+
+The original model uses DID within an IV framework. While there is recent research that attempts to parse what interpreting this coefficient could mean (see \cite{deChaisemartin2017} \cite{https://doi.org/10.48550/arxiv.2011.03593}), Humphreys (2021\cite{Humphreys2021}) does not directly address this in his analysis. I remove the IV framework for the following reasons:
+\begin{enumerate}
+    \item It introduces extra assumptions which must be met, making the analysis more bound to non-rigorous arguments.
+    \item The sign and significance of the coefficient on the legal dispute variable remains non-changed between the two frameworks (verified by OLS regressions run by the author and myself).
+\end{enumerate}.
+
+I also remove the indicator variable controlling for start-up effects in the first four weeks of casino operation, as this is absorbed by the week fixed effects which were not present in the original specification.
+
+\section*{Results}
+\addcontentsline{toc}{section}{Results}
+
+In table 1 in the appendix, we see the results for the two-way fixed effects regression. Clearly, there is not enough evidence to support a treatment effect of the legal dispute on the volume of traditional gambling, as the coefficients for both VLT and table gambling have very high p-values. This again matches with the noisy graphs shown previously. The coefficient on the sports gambling term (gross) is significant at the 5\% level for table gambling, but not for VLT gambling. Of note, the author originally found an opposite result in his analysis, where the coefficient was only significant with VLT gambling as the outcome variable.
+
+It is important to clearly understand the implications of the two approaches of IV and DID based on OLS. Humphreys makes the claim that sports gambling and traditional gambling are difficult to disentangle, as unobservables in the error term likely affect both of them simultaneously. This then necessitates the use of an instrument, which was found to be the number of NBA and NFL games each week. As argued in Humphreys 2021, \cite{Humphreys2021}game schedules are decided well in advance and should be uncorrelated with the unobservables in the error term. In addition, the number of games is found to be positively correlated with the volume of sports gambling. Following the 2SLS process, we are left with a fitted term which holds the exogenous variation due to the number of games held each week.
+
+We do not, however, have a fitted value for our treatment effect, the legal dispute. With only individual fixed effects and limited week indicator variables for the first four weeks of casino operation, nothing is controlling for shocks within each time period around the treatment period. This could lead to falsely claiming a treatment effect is present and is inconsistent with instrumented difference-in-difference approaches used to date (see Duflo 2001\cite{Duflo2001})
+
+
+Looking at the results from the IV replication in Table 2 with the available data, again, no significance is found for the legal coefficient. The coefficient on sports betting for the VLT gambling revenue is significant and negative, which is in compliance with the original result. However, the magnitude of the coefficient is notably smaller than the original, going from -3.962 to -0.473. This points to major discrepancies in the data.
+
+I will now discuss this and other possible reasons for the differing results.
+
+
+\section*{Discussion and Conclusion}
+\addcontentsline{toc}{section}{Discussion and Conclusion}
+
+Since the author's analysis differs in several ways from the one presented here, the reasoning for the discrepancy between them is difficult to pinpoint. Indeed, Table 2 shows that even attempting to directly recreate the original IV results with the available data produces results which deviate substantially from those of the original paper. However, regardless of approach, the DID coefficient remains non-significant with the subsample. Even in the author's results, the DID parameter \textit{remains} significant regardless of whether OLS or IV frameworks are used. These phenomena reaffirm that there are major discrepancies in the data . Given we are supposedly using a subsample of the original data, it is troubling that the effect wholly disappears and speaks to the robustness of the original analysis.
+
+Another potentially worrying aspect of the author's analysis is the lack of time fixed effects at the week-level. With just group fixed effects for individual casinos and no time effects controlling for shocks to the market in each time period, it may well be the case that business cycle changes are being construed as a treatment effect. This argument is corroborated by figures \ref{fig:vlt} and \ref{fig:table}.
+
+Regardless of the outcome, this analysis provides some key takeaways. For one, the set of data being used is crucial for analysis. We know from theory that increasing sample size can reduce both variance and bias of the estimator and there is perhaps crucial variation in that missing year of data post-treatment. Despite the fact that we are using a subsample, gambling consumers may need longer to react to the treatment. In addition, while DID is an extremely powerful and intuitive framework, it is easy to misuse. Simply directly interpreting a coefficient in a DID framework without explicitly reviewing the relevant assumptions can invalidate the results. Additional research being done (ex. Calloway 2021\cite{Callaway2021}) shows that as the complexity of treatment timing and the experimental design increases, we will have to be even more careful about the implementation of DID.
+\paragraph{Aside}Returning to the sunk-cost fallacy, it was clear to me at the start of this analysis that something was unclear with the data provided by the author. After iterating many times over the specification of the original IV design without being able to replicate the results and looking at the graphs, the evidence pointed to the fact that I would be unable to obtain meaningful results. This turned out to be, in a pedagogical sense, incredibly helpful. During my journey to find out what was particularly wrong with my approach, I learned a great deal about IV, DID, and their interactions. I also learned a great deal about data management and the amazing software packages that are being developed for modern causal estimation.
+
+However, in a research sense, it is often times worthwhile to consider shelving an interesting research idea in the face of difficult obstacles (especially when it involves not enough or low-quality data). Great researchers separate themselves from the rest by operating within the intersection of the set of interesting, impactful ideas and the set of ideas which are feasibly measurable. The difficulty, of course, is deciding where those boundaries lie and finding innovative, but honest methods to push those boundaries.
+
+
+\newpage
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
 
 \begin{table}[!h]
-    \input{../python/tables/estimation_results.tex}
+    \input{../bld/python/tables/estimation_results.tex}
     \caption{\label{tab:python-summary}\emph{Python:} Estimation results of the
-        linear Logistic regression.}
+        difference in difference.}
+    \label{table:tab1}
 \end{table}
+% \input{regressions/IV_Gambling.tex}
 
-
-
-
-% section introduction (end)
-
-
-
-\setstretch{1}
+%\end{multicols}
+\clearpage
+\addcontentsline{toc}{section}{References}
 \printbibliography
-\setstretch{1.5}
-
-
-% \appendix
-
-% The chngctr package is needed for the following lines.
-% \counterwithin{table}{section}
-% \counterwithin{figure}{section}
 
 \end{document}

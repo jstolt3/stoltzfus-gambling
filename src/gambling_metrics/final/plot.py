@@ -1,11 +1,10 @@
 """Functions plotting results."""
 
 import plotly.express as px
-import plotly.graph_objects as go
 
 
-def plot_regression_by_age(data, data_info, predictions, group):
-    """Plot regression results by age.
+def plot_gambling_over_time(data, data_info, group):
+    """Plot different types of gambling before and after treatment.
 
     Args:
         data (pandas.DataFrame): The data set.
@@ -26,31 +25,14 @@ def plot_regression_by_age(data, data_info, predictions, group):
         plotly.graph_objects.Figure: The figure.
 
     """
-    plot_data = predictions.melt(
-        id_vars="age",
-        value_vars=predictions.columns,
-        value_name="prediction",
-        var_name=group,
-    )
-
-    outcomes = data[data_info["outcome_numerical"]]
-
     fig = px.line(
-        plot_data,
-        x="age",
-        y="prediction",
-        color=group,
-        labels={"age": "Age", "prediction": "Probability of Smoking"},
+        data,
+        x="week1",
+        y=group,
+        color="casino",
     )
 
-    fig.add_traces(
-        go.Scatter(
-            x=data["age"],
-            y=outcomes,
-            mode="markers",
-            marker_color="black",
-            marker_opacity=0.1,
-            name="Data",
-        ),
-    )
+    # fig.add_traces(
+    #     go.Scatter(
+    #     ),
     return fig

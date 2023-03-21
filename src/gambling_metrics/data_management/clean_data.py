@@ -1,7 +1,5 @@
 """Function(s) for cleaning the data set(s)."""
 
-import pandas as pd
-
 
 def clean_data(data, data_info):
     """Clean data set.
@@ -13,7 +11,6 @@ def clean_data(data, data_info):
         data_info (dict): Information on data set stored in data_info.yaml. The
             following keys can be accessed:
             - 'outcome': Name of dependent variable column in data
-            - 'outcome_numerical': Name to be given to the numerical version of outcome
             - 'columns_to_drop': Names of columns that are dropped in data cleaning step
             - 'categorical_columns': Names of columns that are converted to categorical
             - 'column_rename_mapping': Old and new names of columns to be renamend,
@@ -30,7 +27,7 @@ def clean_data(data, data_info):
         data[cat_col] = data[cat_col].astype("category")
     data = data.rename(columns=data_info["column_rename_mapping"])
 
-    numerical_outcome = pd.Categorical(data[data_info["outcome"]]).codes
-    data[data_info["outcome_numerical"]] = numerical_outcome
+    data["legal"] = ((data["gross"] == 0) & (data["week1"] >= 21624)) * 1
+    data["mobile"] = (data["taxable_mobile_rev"] == 0) * 1
 
     return data

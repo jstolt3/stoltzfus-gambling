@@ -5,15 +5,15 @@ import pytask
 
 from gambling_metrics.analysis.model import load_model
 from gambling_metrics.config import BLD, GROUPS, SRC
-from gambling_metrics.final import plot_regression_by_age
+from gambling_metrics.final import plot_gambling_over_time
 from gambling_metrics.utilities import read_yaml
 
 for group in GROUPS:
 
     kwargs = {
         "group": group,
-        "depends_on": {"predictions": BLD / "python" / "predictions" / f"{group}.csv"},
-        "produces": BLD / "python" / "figures" / f"smoking_by_{group}.png",
+        "depends_on": {"predictions": BLD / "python" / "data" / "data_clean.csv"},
+        "produces": BLD / "python" / "figures" / f"trimmed_week1_{group}.png",
     }
 
     @pytask.mark.depends_on(
@@ -27,8 +27,7 @@ for group in GROUPS:
         """Plot the regression results by age (Python version)."""
         data_info = read_yaml(depends_on["data_info"])
         data = pd.read_csv(depends_on["data"])
-        predictions = pd.read_csv(depends_on["predictions"])
-        fig = plot_regression_by_age(data, data_info, predictions, group)
+        fig = plot_gambling_over_time(data, data_info, group)
         fig.write_image(produces)
 
 
