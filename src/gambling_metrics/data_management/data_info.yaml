@@ -29,4 +29,3 @@ column_rename_mapping:
   type: casino
 
 outcome: vlt_revenue
-# outcome_numerical: smoke_numerical  # created during the clean_data step

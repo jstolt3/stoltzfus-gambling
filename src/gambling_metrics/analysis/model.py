@@ -5,7 +5,7 @@ from statsmodels.iolib.smpickle import load_pickle
 
 
 def fit_did_model(data, data_info, model_type):
-    """Fit a logit model to data.
+    """Fit a did model to data.
 
     Args:
         data (pandas.DataFrame): The data set.
@@ -31,13 +31,13 @@ def fit_did_model(data, data_info, model_type):
     feature_names = list(set(data.columns) - {outcome_name})
 
     if model_type == "linear":
-        # smf.logit expects the binary outcome to be numerical
         formula = f"{outcome_name} ~ " + " + ".join(feature_names)
     else:
-        message = "Only 'linear' model_type is supported right now."
+        message = "Only 'linear' model_type is supported."
         raise ValueError(message)
 
-    return smf.ols(formula, data=data).fit()
+    # DID modeled as ols with treatment indicator variable
+    return smf.ols(formula, data=data).fit(cov_type="HC3")
 
 
 def load_model(path):

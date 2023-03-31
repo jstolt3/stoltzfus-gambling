@@ -1,5 +1,5 @@
-col0,col1,col2,col3
-yes,a,3.0,4
-no,a,4.5,2
-no,b,-1.0,3
-NaN,b,2.0,10
+col0,col1,col2,col3,gross,taxable_mobile_rev,week1
+yes,a,3.0,4,5,5,2,21617
+no,a,4.5,2,7,1,21624
+no,b,-1.0,3,4,7,21631
+NaN,b,2.0,10,2,15,21638

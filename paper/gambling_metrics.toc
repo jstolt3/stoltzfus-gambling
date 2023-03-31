@@ -1,8 +1,0 @@
-\contentsline {section}{Introduction}{1}{section*.2}%
-\contentsline {section}{Background}{1}{section*.3}%
-\contentsline {section}{Author Specification}{1}{section*.4}%
-\contentsline {section}{Personal Design and Specification}{2}{section*.5}%
-\contentsline {section}{Results}{4}{section*.6}%
-\contentsline {section}{Discussion and Conclusion}{4}{section*.7}%
-\contentsline {paragraph}{Aside}{4}{section*.8}%
-\contentsline {section}{Appendix}{6}{section*.9}%

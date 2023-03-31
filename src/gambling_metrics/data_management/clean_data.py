@@ -27,6 +27,7 @@ def clean_data(data, data_info):
         data[cat_col] = data[cat_col].astype("category")
     data = data.rename(columns=data_info["column_rename_mapping"])
 
+    # Create indicator variables
     data["legal"] = ((data["gross"] == 0) & (data["week1"] >= 21624)) * 1
     data["mobile"] = (data["taxable_mobile_rev"] == 0) * 1
 

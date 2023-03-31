@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 import pytest
 from gambling_metrics.config import TEST_DIR
@@ -39,12 +38,3 @@ def test_clean_data_column_rename(data, data_info):
     new_names = set(data_info["column_rename_mapping"].values())
     assert not old_names.intersection(set(data_clean.columns))
     assert new_names.intersection(set(data_clean.columns)) == new_names
-
-
-def test_convert_outcome_to_numerical(data, data_info):
-    data_clean = clean_data(data, data_info)
-    outcome_name = data_info["outcome"]
-    outcome_numerical_name = data_info["outcome_numerical"]
-    assert outcome_numerical_name in data_clean.columns
-    assert data_clean[outcome_name].dtype == "category"
-    assert data_clean[outcome_numerical_name].dtype == np.int8
